@@ -1,0 +1,301 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.register-wrapper {
+  min-height: 100vh;
+  background: white;
+  display: flex;
+  align-items: stretch;
+  padding: 0;
+}
+
+.register-container {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  background: white;
+  border-radius: 0;
+  overflow: visible;
+  box-shadow: none;
+}
+
+/* Left side */
+.register-image {
+  flex: 1;
+  background: linear-gradient(135deg, #ff6b35, #f7931e);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800');
+  background-size: cover;
+  background-position: center;
+}
+
+.food-overlay {
+  background: rgba(0, 0, 0, 0.7);
+  padding: 50px;
+  text-align: center;
+  color: white;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.food-overlay h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.food-overlay p {
+  font-size: 18px;
+  margin-bottom: 50px;
+}
+
+.stats {
+  display: flex;
+  gap: 40px;
+  margin-top: 50px;
+}
+
+.stat h3 {
+  font-size: 28px;
+  color: #ff6b35;
+  margin-bottom: 5px;
+}
+
+.stat p {
+  font-size: 14px;
+  margin: 0;
+}
+
+/* Right side */
+.register-form-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  background: white;
+  overflow-y: auto;
+}
+
+.form-wrapper {
+  max-width: 450px;
+  width: 100%;
+}
+
+.logo-mobile {
+  display: none;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.logo-mobile h2 {
+  font-size: 32px;
+  color: #ff6b35;
+}
+
+.register-form-container h2 {
+  font-size: 32px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.p-welcome-text {
+  color: #666;
+  margin-bottom: 30px;
+  font-size: 16px;
+}
+
+.input-field {
+  margin-bottom: 20px;
+}
+
+.input-field label {
+  display: block;
+  margin-bottom: 8px;
+  color: #555;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.input-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  z-index: 1;
+}
+
+/* Style cho icon SVG từ react-icons */
+.input-icon svg {
+  width: 18px;
+  height: 18px;
+  color: #888;
+  transition: color 0.2s ease;
+}
+
+/* Khi input được focus, icon đổi màu cam */
+.input-box input:focus + .input-icon svg,
+.input-box input:focus ~ .input-icon svg {
+  color: #ff6b35;
+}
+
+.input-box input {
+  width: 100%;
+  padding: 14px 15px 14px 45px;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.input-box input:focus {
+  border-color: #ff6b35;
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+}
+
+/* Hiệu ứng nhẹ cho icon khi hover vào input-box */
+.input-box:hover .input-icon svg {
+  color: #ff6b35;
+  transform: scale(1.05);
+}
+
+
+.terms {
+  margin: 20px 0;
+}
+
+.terms label {
+  color: #666;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.terms a {
+  color: #ff6b35;
+  text-decoration: none;
+  margin: 0 3px;
+}
+
+.terms a:hover {
+  text-decoration: underline;
+}
+
+.register-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #ff6b35, #f7931e);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-top: 10px;
+}
+
+.register-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(255, 107, 53, 0.3);
+}
+
+.register-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.login-link {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.login-link p {
+  color: #666;
+  font-size: 14px;
+}
+
+.login-link span {
+  color: #ff6b35;
+  cursor: pointer;
+  font-weight: 600;
+  margin-left: 5px;
+}
+
+.login-link span:hover {
+  text-decoration: underline;
+}
+
+.error-alert {
+  background: #fee;
+  color: #dc3545;
+  padding: 12px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  text-align: center;
+  border-left: 4px solid #dc3545;
+}
+
+/* Responsive - vẫn đảm bảo full màn hình không bo góc */
+@media (max-width: 968px) {
+  .register-image {
+    display: none;
+  }
+  
+  .logo-mobile {
+    display: block;
+  }
+  
+  .register-container {
+    border-radius: 0;
+  }
+  
+  .register-form-container h2 {
+    text-align: center;
+  }
+  
+  .p-welcome-text {
+    text-align: center;
+  }
+  
+  .stats {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .register-form-container {
+    padding: 20px;
+  }
+  
+  .form-wrapper h2 {
+    font-size: 24px;
+  }
+}
+

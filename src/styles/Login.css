@@ -1,0 +1,361 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.login-wrapper {
+  min-height: 100vh;
+  background: white;           /* Nền trắng sạch, full màn hình */
+  display: flex;
+  align-items: stretch;       /* Để các cột con kéo dài hết chiều cao */
+  justify-content: flex-start;
+  padding: 0;                 /* Không có khoảng cách viền */
+}
+
+.login-container {
+  display: flex;
+  width: 100%;               /* Chiếm toàn bộ chiều rộng */
+  max-width: 100%;           /* Không giới hạn độ rộng */
+  margin: 0;
+  background: white;
+  border-radius: 0;          /* Không bo góc */
+  overflow: visible;         /* Không ẩn nội dung thừa */
+  box-shadow: none;          /* Bỏ đổ bóng, giữ phẳng hoàn toàn */
+}
+
+/* Left side - Food Image (full chiều cao) */
+.login-image {
+  flex: 1;
+  background: linear-gradient(135deg, #ff6b35, #f7931e);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800');
+  background-size: cover;
+  background-position: center;
+}
+
+.food-overlay {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 50px;
+  text-align: center;
+  color: white;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.food-overlay h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: #e0e0e0;
+}
+
+.food-overlay p {
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+/* Thay thế đoạn này trong file CSS */
+.food-icons {
+  display: flex;
+  gap: 20px;
+  font-size: 40px;
+  animation: bounce 2s infinite;
+}
+
+/* Sửa selector từ .food-icons span thành .food-icons > * */
+.food-icons > * {
+  animation: float 3s ease-in-out infinite;
+  cursor: pointer;
+}
+
+/* Delay cho từng icon */
+.food-icons > *:nth-child(2) { animation-delay: 0.2s; }
+.food-icons > *:nth-child(3) { animation-delay: 0.4s; }
+.food-icons > *:nth-child(4) { animation-delay: 0.6s; }
+.food-icons > *:nth-child(5) { animation-delay: 0.8s; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Right side - Form (full chiều cao) */
+.login-form-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  background: white;
+}
+
+.form-wrapper {
+  max-width: 450px;
+  width: 100%;
+}
+
+.logo-mobile {
+  display: none;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.logo-mobile h2 {
+  font-size: 32px;
+  color: #ff6b35;
+}
+
+.login-form-container h2 {
+  font-size: 32px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.p-welcome-text {
+  color: #666;
+  margin-bottom: 30px;
+  font-size: 16px;
+}
+
+.input-field {
+  margin-bottom: 20px;
+}
+
+.input-field label {
+  display: block;
+  margin-bottom: 8px;
+  color: #555;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.input-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 15px;
+  font-size: 18px;
+}
+
+.input-box input {
+  width: 100%;
+  padding: 14px 15px 14px 45px;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.input-box input:focus {
+  border-color: #ff6b35;
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+}
+
+.forgot-password {
+  text-align: right;
+  margin-bottom: 25px;
+}
+
+.forgot-password a {
+  color: #ff6b35;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #ff6b35, #f7931e);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.login-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(255, 107, 53, 0.3);
+}
+
+.login-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.register-link {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.register-link p {
+  color: #666;
+  font-size: 14px;
+}
+
+.register-link span {
+  color: #ff6b35;
+  cursor: pointer;
+  font-weight: 600;
+  margin-left: 5px;
+}
+
+.register-link span:hover {
+  text-decoration: underline;
+}
+
+.or-divider {
+  text-align: center;
+  margin: 25px 0;
+  position: relative;
+}
+
+.or-divider::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: 1px;
+  background: #e0e0e0;
+}
+
+.or-divider span {
+  background: white;
+  padding: 0 15px;
+  position: relative;
+  color: #999;
+  font-size: 14px;
+}
+
+.social-login {
+  display: flex;
+  gap: 15px;
+}
+
+.social-btn {
+  flex: 1;
+  padding: 12px;
+  border: 2px solid #e0e0e0;
+  background: white;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.social-btn.google:hover {
+  background: rgb(52, 168, 83);   /* #34A853 */
+  color: white;
+  border-color: hsl(142, 53%, 43%);
+}
+
+.social-btn.facebook:hover {
+  background: #4267b2;
+  color: white;
+  border-color: #4267b2;
+}
+
+.error-alert {
+  background: #fee;
+  color: #dc3545;
+  padding: 12px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  text-align: center;
+  border-left: 4px solid #dc3545;
+}
+
+/* Responsive - vẫn đảm bảo full màn hình không bo góc */
+@media (max-width: 968px) {
+  .login-image {
+    display: none;
+  }
+  
+  .logo-mobile {
+    display: block;
+  }
+  
+  .login-container {
+    border-radius: 0;
+  }
+  
+  .login-form-container h2 {
+    text-align: center;
+  }
+  
+  .p-welcome-text {
+    text-align: center;
+
+  }
+}
+
+@media (max-width: 480px) {
+  .login-form-container {
+    padding: 20px;
+  }
+  
+  .form-wrapper h2 {
+    font-size: 24px;
+  }
+  
+  .social-login {
+    flex-direction: column;
+  }
+}
+
+/* Nút hiển thị/ẩn mật khẩu */
+.password-toggle-btn {
+  position: absolute;
+  right: 15px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  color: #888;
+  transition: color 0.2s ease;
+  z-index: 1;
+}
+
+.password-toggle-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.password-toggle-btn:hover {
+  color: #ff6b35;
+}
+
+/* Điều chỉnh padding-right của input để tránh đè lên nút */
+.input-box input {
+  padding-right: 45px; /* Đủ chỗ cho icon mắt */
+}
