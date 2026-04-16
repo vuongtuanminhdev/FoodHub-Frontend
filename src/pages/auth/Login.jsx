@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { login } from "../services/authService";
-import { saveToken, saveUserInfo } from "../utils/auth";
+import { login } from "../../services/authService";
+import { saveToken, saveUserInfo } from "../../utils/auth";
 import { useNavigate } from "react-router-dom";
 import { 
   FaUser, FaLock, FaPizzaSlice, FaHamburger, 
   FaUtensils, FaLeaf, FaFish, FaGoogle, FaFacebook,
   FaEye, FaEyeSlash 
 } from "react-icons/fa";
-import "../styles/Login.css";
+import "../../styles/auth/Login.css";
 
 function Login() {
   const [name, setName] = useState("");

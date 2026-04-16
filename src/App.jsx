@@ -1,10 +1,10 @@
 // App.js
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Home from './pages/Home';
-import AdminDashboard from './pages/AdminDashboard';
-import ProtectedRoute from './components/ProtectedRoute';
+import Login from './pages/auth/Login';
+import Register from './pages/auth/Register';
+import Home from './pages/users/HomeUser';
+import AdminDashboard from './pages/admins/HomeAdmin';
+import ProtectedRoute from './routes/ProtectedRoute';
 import { getToken, getUserRole } from './utils/auth';
 
 // Component điều hướng mặc định

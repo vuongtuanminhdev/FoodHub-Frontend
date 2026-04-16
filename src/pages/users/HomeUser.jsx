@@ -1,6 +1,6 @@
-import { logout } from "../utils/auth";
+import { logout } from "../../utils/auth";
 import { useNavigate } from "react-router-dom";
-import "../styles/Home.css";
+import "../../styles/auth/Register.css";
 
 function Home() {
   const navigate = useNavigate();

@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { register } from "../services/authService";
+import { register } from "../../services/authService";
 import { useNavigate } from "react-router-dom";
 import { FaUser, FaEnvelope, FaPhoneAlt, FaLock, FaCheckCircle } from "react-icons/fa";
-import "../styles/Register.css";
+import "../../styles/auth/Register.css";
 
 function Register() {
   const [name, setName] = useState("");
