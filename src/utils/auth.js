@@ -1,39 +1,51 @@
-// utils/auth.js
+// src/utils/auth.js
 const TOKEN_KEY = 'auth_token';
 const USER_KEY = 'user_info';
 
 export const saveToken = (token) => {
-    localStorage.setItem(TOKEN_KEY, token);
+    if (token) {
+        localStorage.setItem(TOKEN_KEY, token);
+    }
 };
 
 export const getToken = () => {
     return localStorage.getItem(TOKEN_KEY);
 };
 
-// THÊM: Lưu thông tin user
 export const saveUserInfo = (userInfo) => {
-    localStorage.setItem(USER_KEY, JSON.stringify(userInfo));
+    if (userInfo) {
+        localStorage.setItem(USER_KEY, JSON.stringify(userInfo));
+        console.log('Saved user info:', userInfo);
+    }
 };
 
-// THÊM: Lấy thông tin user
 export const getUserInfo = () => {
     const userInfo = localStorage.getItem(USER_KEY);
     return userInfo ? JSON.parse(userInfo) : null;
 };
 
-// THÊM: Lấy role của user
+// 🔥 FIX: Chấp nhận nhiều format role
 export const getUserRole = () => {
     const userInfo = getUserInfo();
-    return userInfo?.role || null;
+    const role = userInfo?.role;
+    
+    // Chấp nhận cả ROLE_ADMIN, ADMIN, admin, 2, etc.
+    console.log('Raw role from storage:', role);
+    return role;
 };
 
-// THÊM: Kiểm tra có phải admin không
+// 🔥 FIX: Kiểm tra admin linh hoạt hơn
 export const isAdmin = () => {
     const role = getUserRole();
-    return role === 'ROLE_ADMIN';
+    
+    // Chấp nhận nhiều dạng role
+    const adminRoles = ['ROLE_ADMIN', 'ADMIN', 'admin', 2, '2'];
+    const isUserAdmin = adminRoles.includes(role);
+    
+    console.log('Is admin check:', { role, isUserAdmin });
+    return isUserAdmin;
 };
 
-// THÊM: Kiểm tra đã đăng nhập chưa
 export const isAuthenticated = () => {
     return getToken() !== null;
 };
@@ -41,4 +53,5 @@ export const isAuthenticated = () => {
 export const logout = () => {
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(USER_KEY);
+    window.location.href = '/login';
 };

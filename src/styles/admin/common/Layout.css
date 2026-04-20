@@ -1,0 +1,18 @@
+/* src/components/common/Layout.css */
+.admin-layout {
+  min-height: 100vh;
+}
+
+.admin-main {
+  margin-left: 250px;
+  margin-top: 70px;
+  margin-bottom: 60px;
+  padding: 2rem;
+  background: #f5f7fa;
+  min-height: calc(100vh - 130px);
+}
+
+.content-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+}

@@ -1,46 +1,52 @@
-const API_BASE = 'http://localhost:8080/api/auth';
+// src/services/authService.js
+import api from "./api";
+import { saveToken, saveUserInfo } from "../utils/auth";
+
+export const login = async (credentials) => {
+    try {
+        console.log('🔐 Attempting login for:', credentials.email);
+        
+        const response = await api.post('/auth/login', {
+            email: credentials.email,
+            password: credentials.password
+        });
+        
+        console.log('📦 Login response:', response.data);
+        
+        // Kiểm tra cấu trúc response
+        if (!response.data.token) {
+            console.error('❌ No token in response! Response keys:', Object.keys(response.data));
+            throw new Error('Server did not return a token');
+        }
+        
+        // Lưu token và user info
+        saveToken(response.data.token);
+        saveUserInfo({
+            email: response.data.email,
+            name: response.data.name,
+            role: response.data.role
+        });
+        
+        console.log('✅ Login successful! Role:', response.data.role);
+        console.log('   Token saved:', response.data.token.substring(0, 30) + '...');
+        
+        return response.data;
+    } catch (error) {
+        console.error('❌ Login error:', error.response?.status, error.response?.data);
+        throw new Error(error.response?.data?.error || error.response?.data?.message || 'Login failed');
+    }
+};
 
 export const register = async (userData) => {
-    const response = await fetch(`${API_BASE}/register`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+    try {
+        const response = await api.post('/auth/register', {
             name: userData.name,
             email: userData.email,
             password: userData.password
-        })
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-        throw new Error(data.error || 'Registration failed');
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Register error:', error.response?.data);
+        throw error;
     }
-
-    return data;
-};
-
-export const login = async (credentials) => {
-    const response = await fetch(`${API_BASE}/login`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            email: credentials.email,
-            password: credentials.password
-        })
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-        throw new Error(data.error || 'Login failed');
-    }
-
-    // 🔥 SỬA: trả về toàn bộ data thay vì chỉ token
-    // Data trả về từ server: { token, role, email, name }
-    return data;
 };

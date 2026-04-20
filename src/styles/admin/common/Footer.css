@@ -1,0 +1,10 @@
+/* src/components/common/Footer.css */
+.admin-footer {
+  background: #2c3e50;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
