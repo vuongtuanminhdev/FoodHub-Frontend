@@ -2,10 +2,10 @@ import "../../styles/admin/HomeAdmin.css";
 import { getUserInfo } from "../../utils/auth";
 import { Outlet, useLocation } from "react-router-dom";
 
-import Sidebar from "../../components/admin/Sidebar";
-import Header from "../../components/admin/Header";
-import StatsGrid from "../../components/admin/StatsGrid";
-import RecentActivity from "../../components/admin/RecentActivity";
+import Sidebar from "../../components/admin/dashboard/UserForm";
+import Header from "../../components/admin/dashboard/UsersTable";
+import StatsGrid from "../../components/admin/dashboard/UserRow";
+import RecentActivity from "../../components/admin/dashboard/UserFilter";
 
 import {
   Users,
@@ -27,7 +27,7 @@ function HomeAdmin() {
       name: "Quản lý người dùng",
       icon: Users,
       color: "#6366f1",
-      path: "/admin/dashboard/usersmanager", // ✅ FIX
+      path: "/admin/dashboard/usersmanager",
     },
     {
       id: 2,

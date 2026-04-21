@@ -1,5 +1,5 @@
 import { LogOut, LayoutDashboard } from "lucide-react";
-import { getUserInfo, logout } from "../../utils/auth";
+import { getUserInfo, logout } from "../../../utils/auth";
 import { useNavigate, useLocation } from "react-router-dom";
 
 function Sidebar({ menuItems = [] }) {

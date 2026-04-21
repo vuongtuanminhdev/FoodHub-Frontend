@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getToken } from "../../utils/auth";
+import { getToken } from "../../../utils/auth";
 
 function StatsGrid() {
   const [usersCount, setUsersCount] = useState(0);

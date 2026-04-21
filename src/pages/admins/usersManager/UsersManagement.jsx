@@ -17,6 +17,10 @@ import {
   AlertCircle,
   Eye,
   EyeOff,
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
 } from "lucide-react";
 import { getToken, logout } from "../../../utils/auth";
 import "../../../styles/admin/common/AdminUsers.css";
@@ -43,10 +47,15 @@ function AdminUsers() {
   const [editing, setEditing] = useState(false);
   const [form, setForm] = useState(emptyForm);
   const [deleteConfirm, setDeleteConfirm] = useState(null);
-  
+
   // State cho việc hiển thị mật khẩu
   const [showPassword, setShowPassword] = useState(false);
   const [generatedPassword, setGeneratedPassword] = useState("");
+
+  // State cho phân trang
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     const token = getToken();
@@ -64,7 +73,24 @@ function AdminUsers() {
         u.email?.toLowerCase().includes(keyword.toLowerCase())
     );
     setFilteredUsers(result);
+    setCurrentPage(1); // Reset về trang đầu khi tìm kiếm
   }, [keyword, users]);
+
+  // Tính toán phân trang
+  useEffect(() => {
+    const total = Math.ceil(filteredUsers.length / itemsPerPage);
+    setTotalPages(total > 0 ? total : 1);
+    if (currentPage > total && total > 0) {
+      setCurrentPage(total);
+    }
+  }, [filteredUsers, itemsPerPage, currentPage]);
+
+  // Lấy dữ liệu cho trang hiện tại
+  const getCurrentPageData = () => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return filteredUsers.slice(startIndex, endIndex);
+  };
 
   const authHeader = () => ({
     Authorization: `Bearer ${getToken()}`,
@@ -171,7 +197,6 @@ function AdminUsers() {
         return;
       }
 
-      // Nếu là tạo mới và có mật khẩu được sinh tự động, hiển thị thông báo
       if (!editing && generatedPassword) {
         alert(`Tạo tài khoản thành công!\nMật khẩu: ${generatedPassword}\nVui lòng lưu lại mật khẩu này.`);
       } else {
@@ -221,21 +246,58 @@ function AdminUsers() {
     return role === "ROLE_ADMIN" ? "Admin" : "Người dùng";
   };
 
-  // Hàm kiểm tra độ mạnh của mật khẩu
   const getPasswordStrength = (password) => {
     if (!password) return { score: 0, text: "Chưa nhập", color: "#e5e7eb" };
-    
+
     let score = 0;
     if (password.length >= 8) score++;
     if (password.length >= 12) score++;
     if (/[a-z]/.test(password) && /[A-Z]/.test(password)) score++;
     if (/[0-9]/.test(password)) score++;
     if (/[!@#$%^&*]/.test(password)) score++;
-    
+
     if (score <= 2) return { score, text: "Yếu", color: "#ef4444" };
     if (score <= 4) return { score, text: "Trung bình", color: "#f59e0b" };
     return { score, text: "Mạnh", color: "#10b981" };
   };
+
+  // Hàm phân trang
+  const goToPage = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
+
+  const getVisiblePages = () => {
+    const delta = 2;
+    const range = [];
+    const rangeWithDots = [];
+    let l;
+
+    for (let i = 1; i <= totalPages; i++) {
+      if (i === 1 || i === totalPages || (i >= currentPage - delta && i <= currentPage + delta)) {
+        range.push(i);
+      }
+    }
+
+    range.forEach((i) => {
+      if (l) {
+        if (i - l === 2) {
+          rangeWithDots.push(l + 1);
+        } else if (i - l !== 1) {
+          rangeWithDots.push("...");
+        }
+      }
+      rangeWithDots.push(i);
+      l = i;
+    });
+
+    return rangeWithDots;
+  };
+
+  const currentData = getCurrentPageData();
+  const startIndex = (currentPage - 1) * itemsPerPage + 1;
+  const endIndex = Math.min(currentPage * itemsPerPage, filteredUsers.length);
 
   return (
     <div className="admin-users">
@@ -316,104 +378,184 @@ function AdminUsers() {
 
       {/* Users Table */}
       {!loading && !error && (
-        <div className="table-container">
-          <table className="users-table">
-            <thead>
-              <tr>
-                <th>STT</th>
-                <th>Thông tin người dùng</th>
-                <th>Email</th>
-                <th>Vai trò</th>
-                <th>Trạng thái</th>
-                <th>Ngày tạo</th>
-                <th>Thao tác</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredUsers.length > 0 ? (
-                filteredUsers.map((u, index) => (
-                  <tr key={u.id} className="user-row">
-                    <td className="text-center">{index + 1}</td>
-                    <td>
-                      <div className="user-info">
-                        <div className="user-avatar">
-                          {u.name?.charAt(0).toUpperCase()}
-                        </div>
-                        <div className="user-details">
-                          <div className="user-name">{u.name}</div>
-                          <div className="user-email-mobile">{u.email}</div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="user-email">{u.email}</td>
-                    <td>
-                      <span className={`role-badge ${getRoleBadgeClass(u.role?.name)}`}>
-                        {getRoleLabel(u.role?.name)}
-                      </span>
-                    </td>
-                    <td>
-                      <button
-                        className={`status-badge ${u.status === "ACTIVE" ? "status-active" : "status-blocked"}`}
-                        onClick={() => toggleStatus(u.id)}
-                      >
-                        {u.status === "ACTIVE" ? (
-                          <>
-                            <ShieldCheck size={14} />
-                            <span>Active</span>
-                          </>
-                        ) : (
-                          <>
-                            <ShieldX size={14} />
-                            <span>Blocked</span>
-                          </>
-                        )}
-                      </button>
-                    </td>
-                    <td>
-                      <div className="date-cell">
-                        {u.createdAt
-                          ? new Date(u.createdAt).toLocaleDateString("vi-VN")
-                          : "--/--/----"}
-                      </div>
-                    </td>
-                    <td>
-                      <div className="action-buttons-group">
-                        <button
-                          className="icon-btn edit-btn"
-                          onClick={() => openEdit(u)}
-                          title="Chỉnh sửa"
-                        >
-                          <Pencil size={16} />
-                        </button>
-                        <button
-                          className="icon-btn delete-btn"
-                          onClick={() => confirmDelete(u.id, u.name)}
-                          title="Xóa"
-                        >
-                          <Trash2 size={16} />
-                        </button>
-                      </div>
-                    </td>
+        <>
+          <div className="table-container">
+            <div className="table-wrapper">
+              <table className="users-table">
+                <thead>
+                  <tr>
+                    <th>STT</th>
+                    <th>Tên</th>
+                    <th>Email</th>
+                    <th>Vai trò</th>
+                    <th>Trạng thái</th>
+                    <th>Ngày tạo</th>
+                    <th>Thao tác</th>
                   </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="7" className="empty-state">
-                    <div className="empty-content">
-                      <Users size={48} strokeWidth={1.5} />
-                      <p>Không tìm thấy người dùng nào</p>
-                      {keyword && (
-                        <button onClick={() => setKeyword("")} className="clear-filter-btn">
-                          Xóa bộ lọc
+                </thead>
+                <tbody>
+                  {currentData.length > 0 ? (
+                    currentData.map((u, index) => (
+                      <tr key={u.id} className="user-row">
+                        <td className="text-center">{(currentPage - 1) * itemsPerPage + index + 1}</td>
+                        <td>
+                          <div className="user-info">
+                            {/* <div className="user-avatar">
+                              {u.name?.charAt(0).toUpperCase()}
+                            </div> */}
+                            <div className="user-details">
+                              <div className="user-name">{u.name}</div>
+                              <div className="user-email-mobile">{u.email}</div>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="user-email">{u.email}</td>
+                        <td>
+                          <span className={`role-badge ${getRoleBadgeClass(u.role?.name)}`}>
+                            {getRoleLabel(u.role?.name)}
+                          </span>
+                        </td>
+                        <td>
+                          <button
+                            className={`status-badge ${u.status === "ACTIVE" ? "status-active" : "status-blocked"}`}
+                            onClick={() => toggleStatus(u.id)}
+                          >
+                            {u.status === "ACTIVE" ? (
+                              <>
+                                <ShieldCheck size={14} />
+                                <span>Active</span>
+                              </>
+                            ) : (
+                              <>
+                                <ShieldX size={14} />
+                                <span>Blocked</span>
+                              </>
+                            )}
+                          </button>
+                        </td>
+                        <td>
+                          <div className="date-cell">
+                            {u.createdAt
+                              ? new Date(u.createdAt).toLocaleDateString("vi-VN")
+                              : "--/--/----"}
+                          </div>
+                        </td>
+                        <td>
+                          <div className="action-buttons-group">
+                            <button
+                              className="icon-btn edit-btn"
+                              onClick={() => openEdit(u)}
+                              title="Chỉnh sửa"
+                            >
+                              <Pencil size={16} />
+                            </button>
+                            <button
+                              className="icon-btn delete-btn"
+                              onClick={() => confirmDelete(u.id, u.name)}
+                              title="Xóa"
+                            >
+                              <Trash2 size={16} />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="7" className="empty-state">
+                        <div className="empty-content">
+                          <Users size={48} strokeWidth={1.5} />
+                          <p>Không tìm thấy người dùng nào</p>
+                          {keyword && (
+                            <button onClick={() => setKeyword("")} className="clear-filter-btn">
+                              Xóa bộ lọc
+                            </button>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Pagination */}
+          {filteredUsers.length > 0 && (
+            <div className="pagination-container">
+              <div className="pagination-info">
+                Hiển thị <strong>{startIndex}</strong> - <strong>{endIndex}</strong> trên tổng số{" "}
+                <strong>{filteredUsers.length}</strong> người dùng
+              </div>
+
+              <div className="pagination-controls">
+                <div className="items-per-page">
+                  <span>Hiển thị:</span>
+                  <select
+                    value={itemsPerPage}
+                    onChange={(e) => {
+                      setItemsPerPage(Number(e.target.value));
+                      setCurrentPage(1);
+                    }}
+                  >
+                    <option value={5}>5</option>
+                    <option value={10}>10</option>
+                    <option value={20}>20</option>
+                    <option value={50}>50</option>
+                  </select>
+                </div>
+
+                <div className="pagination-buttons">
+                  <button
+                    onClick={() => goToPage(1)}
+                    disabled={currentPage === 1}
+                    className="pagination-btn"
+                  >
+                    <ChevronsLeft size={18} />
+                  </button>
+                  <button
+                    onClick={() => goToPage(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className="pagination-btn"
+                  >
+                    <ChevronLeft size={18} />
+                  </button>
+
+                  <div className="page-numbers">
+                    {getVisiblePages().map((page, index) => (
+                      page === "..." ? (
+                        <span key={`dots-${index}`} className="page-dots">...</span>
+                      ) : (
+                        <button
+                          key={page}
+                          onClick={() => goToPage(page)}
+                          className={`page-number ${currentPage === page ? "active" : ""}`}
+                        >
+                          {page}
                         </button>
-                      )}
-                    </div>
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+                      )
+                    ))}
+                  </div>
+
+                  <button
+                    onClick={() => goToPage(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className="pagination-btn"
+                  >
+                    <ChevronRight size={18} />
+                  </button>
+                  <button
+                    onClick={() => goToPage(totalPages)}
+                    disabled={currentPage === totalPages}
+                    className="pagination-btn"
+                  >
+                    <ChevronsRight size={18} />
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </>
       )}
 
       {/* Modal Form */}
@@ -481,12 +623,11 @@ function AdminUsers() {
                     {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
                 </div>
-                
-                {/* Hiển thị độ mạnh mật khẩu */}
+
                 {form.password && (
                   <div className="password-strength">
                     <div className="strength-bar">
-                      <div 
+                      <div
                         className="strength-fill"
                         style={{
                           width: `${(getPasswordStrength(form.password).score / 5) * 100}%`,
@@ -499,8 +640,7 @@ function AdminUsers() {
                     </span>
                   </div>
                 )}
-                
-                {/* Nút tạo mật khẩu ngẫu nhiên */}
+
                 {!editing && (
                   <button
                     type="button"
@@ -510,7 +650,7 @@ function AdminUsers() {
                     Tạo mật khẩu ngẫu nhiên
                   </button>
                 )}
-                
+
                 {editing && (
                   <small className="form-hint">Để trống nếu muốn giữ nguyên mật khẩu cũ</small>
                 )}
