@@ -4,6 +4,7 @@ import Register from "./pages/auth/Register";
 import Home from "./pages/users/HomeUser";
 import HomeAdmin from "./pages/admins/HomeAdmin";
 import AdminUsers from "./pages/admins/usersManager/UsersManagement";
+import FoodsManagement from "./pages/admins/foodsManagement/FoodList";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
 import { getToken, getUserRole } from "./utils/auth";
@@ -52,12 +53,18 @@ function App() {
           {/* Dashboard mặc định */}
           <Route index element={<div></div>} />
 
-          {/* 🔥 User Management */}
+          {/* User Management */}
           <Route path="usersmanager" element={<AdminUsers />} />
+
+          {/* ✅ Foods Management */}
+          <Route path="foods" element={<FoodsManagement />} />
         </Route>
 
         {/* Default */}
         <Route path="/" element={<NavigateBasedOnRole />} />
+
+        {/* Fallback nếu route sai */}
+        <Route path="*" element={<Navigate to="/" />} />
 
       </Routes>
     </BrowserRouter>
