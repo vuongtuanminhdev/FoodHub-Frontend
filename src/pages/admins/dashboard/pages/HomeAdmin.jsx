@@ -1,11 +1,11 @@
-import "../../styles/admin/HomeAdmin.css";
-import { getUserInfo } from "../../utils/auth";
+import "../../../../styles/admin/dashboard/HomeAdmin.css";
+import { getUserInfo } from "../../../../utils/auth";
 import { Outlet, useLocation } from "react-router-dom";
 
-import Sidebar from "../../components/admin/dashboard/UserForm";
-import Header from "../../components/admin/dashboard/UsersTable";
-import StatsGrid from "../../components/admin/dashboard/UserRow";
-import RecentActivity from "../../components/admin/dashboard/UserFilter";
+import Sidebar from "../components/Form";
+import Header from "../components/Welcome";
+import StatsGrid from "../components/Row";
+import RecentActivity from "../components/Filter";
 
 import {
   Users,
@@ -73,7 +73,6 @@ function HomeAdmin() {
           </>
         )}
 
-        {/* 🔥 render page con */}
         <Outlet />
       </main>
     </div>

@@ -3,9 +3,7 @@
 const TOKEN_KEY = "auth_token";
 const USER_KEY = "user_info";
 
-// ===============================
 // 🔐 TOKEN
-// ===============================
 export const saveToken = (token) => {
   if (token && typeof token === "string") {
     localStorage.setItem(TOKEN_KEY, token);
@@ -23,9 +21,7 @@ export const getToken = () => {
   return token;
 };
 
-// ===============================
 // 👤 USER INFO
-// ===============================
 export const saveUserInfo = (userInfo) => {
   if (userInfo) {
     localStorage.setItem(USER_KEY, JSON.stringify(userInfo));

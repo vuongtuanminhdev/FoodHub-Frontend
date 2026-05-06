@@ -1,10 +1,11 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Login from "./pages/auth/Login";
-import Register from "./pages/auth/Register";
-import Home from "./pages/users/HomeUser";
-import HomeAdmin from "./pages/admins/HomeAdmin";
-import AdminUsers from "./pages/admins/usersManager/UsersManagement";
-import FoodsManagement from "./pages/admins/foodsManagement/FoodList";
+import Login from "./pages/auth/Login.jsx";
+import Register from "./pages/auth/Register.jsx";
+import Home from "./pages/customer/HomeCustomer.jsx";
+import HomeAdmin from "./pages/admins/dashboard/pages/HomeAdmin.jsx";
+
+import AdminUsers from "./pages/admins/usersManager/AdminUsers.jsx";
+import FoodsManagement from "./pages/admins/foodsManager/FoodList.jsx";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
 import { getToken, getUserRole } from "./utils/auth";
@@ -51,19 +52,19 @@ function App() {
           }
         >
           {/* Dashboard mặc định */}
-          <Route index element={<div></div>} />
+          <Route index element={<div>Dashboard</div>} />
 
           {/* User Management */}
           <Route path="usersmanager" element={<AdminUsers />} />
 
-          {/* ✅ Foods Management */}
+          {/* Foods Management */}
           <Route path="foods" element={<FoodsManagement />} />
         </Route>
 
         {/* Default */}
         <Route path="/" element={<NavigateBasedOnRole />} />
 
-        {/* Fallback nếu route sai */}
+        {/* Fallback */}
         <Route path="*" element={<Navigate to="/" />} />
 
       </Routes>

@@ -1,4 +1,4 @@
-// AdminUsers.jsx (phần cập nhật)
+// AdminUsers.jsx
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -23,7 +23,7 @@ import {
   ChevronsRight,
 } from "lucide-react";
 import { getToken, logout } from "../../../utils/auth";
-import "../../../styles/admin/common/AdminUsers.css";
+import "../../../styles/admin/users/AdminUsers.css";
 
 function AdminUsers() {
   const navigate = useNavigate();
