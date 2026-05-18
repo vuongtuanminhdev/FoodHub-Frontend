@@ -7,7 +7,7 @@ function RecentActivity() {
       </div>
 
       <div className="activity-list">
-        {[1,2,3,4].map((i) => (
+        {[1,2,3].map((i) => (
           <div key={i} className="activity-item">
             <div className="activity-dot"></div>
             <div className="activity-detail">

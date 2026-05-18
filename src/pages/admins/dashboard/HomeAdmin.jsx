@@ -1,11 +1,11 @@
-import "../../../../styles/admin/dashboard/HomeAdmin.css";
-import { getUserInfo } from "../../../../utils/auth";
+import "../../../styles/admin/dashboard/HomeAdmin.css";
+import { getUserInfo } from "../../../utils/auth";
 import { Outlet, useLocation } from "react-router-dom";
 
-import Sidebar from "../components/Form";
-import Header from "../components/Welcome";
-import StatsGrid from "../components/Row";
-import RecentActivity from "../components/Filter";
+import Sidebar from "./components/Form";
+import Header from "./components/Welcome";
+import StatsGrid from "./components/Row";
+import RecentActivity from "./components/Filter";
 
 import {
   Users,
@@ -66,14 +66,14 @@ function HomeAdmin() {
       <main className="main-content">
         <Header userInfo={userInfo} />
 
-        {isDashboard && (
+        {isDashboard ? (
           <>
             <StatsGrid />
             <RecentActivity />
           </>
+        ) : (
+          <Outlet />
         )}
-
-        <Outlet />
       </main>
     </div>
   );

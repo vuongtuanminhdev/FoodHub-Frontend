@@ -7,10 +7,10 @@ styles/admins/HomeAdmin.css
 
 .admin-dashboard {
   display: flex;
-  min-height: 100vh;
+  height: 100vh;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   position: relative;
-  overflow-x: hidden;
+  overflow: hidden;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
@@ -124,6 +124,15 @@ styles/admins/HomeAdmin.css
   display: flex;
   flex-direction: column;
   gap: 8px;
+  overflow-y: auto;
+}
+
+.sidebar-nav::-webkit-scrollbar {
+  width: 4px;
+}
+.sidebar-nav::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
 }
 
 .nav-item {
@@ -206,7 +215,7 @@ styles/admins/HomeAdmin.css
 /* Stats grid */
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 24px;
   margin-bottom: 40px;
 }
