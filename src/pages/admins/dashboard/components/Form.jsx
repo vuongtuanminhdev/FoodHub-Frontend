@@ -47,7 +47,6 @@ function Sidebar({ menuItems = [] }) {
         </div>
         <div className="user-info">
           <h4>{userInfo?.name || "Admin User"}</h4>
-          <p>{userInfo?.role || "Administrator"}</p>
         </div>
       </div>
 

@@ -155,56 +155,48 @@
 
 /* ==================== STATS CARDS ==================== */
 .stats-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  gap: 16px;
+  display: flex;
+  gap: 8px;
   margin-bottom: 16px;
   flex-shrink: 0;
 }
 
 .stat-card {
+  flex: 0 0 auto; /* không co giãn, kích thước theo nội dung */
+  min-width: 90px;
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.6);
-  border-radius: 16px;
-  padding: 0px 10px;
+  border-radius: 14px;
+  padding: 0px 0px; /* giảm padding trên dưới và 2 bên */
   text-align: center;
   box-shadow: 0 4px 15px -5px rgba(0, 0, 0, 0.05);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.stat-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.15);
-  background: white;
-  border-color: rgba(99, 102, 241, 0.1);
-}
-
 .stat-icon {
-  margin-bottom: 8px;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
   display: flex;
   justify-content: center;
 }
 
 .stat-icon svg {
-  width: 28px;
-  height: 28px;
+  width: 22px;  /* nhỏ hơn */
+  height: 22px; /* nhỏ hơn */
 }
 
 .stat-number {
-  font-size: 24px;
+  font-size: 20px; /* nhỏ hơn */
   font-weight: 700;
   background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin: 4px 0;
+  margin: 2px 0;
 }
 
 .stat-label {
   color: #6b7280;
-  font-size: 13px;
+  font-size: 11px; /* nhỏ hơn */
   font-weight: 500;
 }
 

@@ -150,14 +150,13 @@ function FoodList() {
           </h1>
           <p>Quản lý danh sách món ăn, thêm, sửa, xóa và tìm kiếm dễ dàng</p>
         </div>
+        
         <div className="stats-container">
         <div className="stat-card">
-          <div className="stat-icon"><Pizza size={36} color="#4f46e5" /></div>
           <div className="stat-number">{stats.total}</div>
           <div className="stat-label">Tổng số món</div>
         </div>
         <div className="stat-card">
-          <div className="stat-icon"><Tags size={36} color="#7c3aed" /></div>
           <div className="stat-number">{stats.categories}</div>
           <div className="stat-label">Danh mục</div>
         </div>
@@ -184,11 +183,6 @@ function FoodList() {
           </div>
 
           <div className="action-buttons">
-            <button className="btn-refresh" onClick={fetchFoods}>
-              <RefreshCcw size={18} />
-              <span>Làm mới</span>
-            </button>
-
             <button className="btn-primary" onClick={handleAdd}>
               <Plus size={18} />
               <span>Thêm món ăn</span>
